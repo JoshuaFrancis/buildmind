@@ -3,10 +3,10 @@
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: "48hr", label: "Average Delivery" },
-  { value: "100+", label: "Hours Saved Per Client" },
-  { value: "98%", label: "Client Satisfaction" },
+  { value: "48hr", label: "Prototype Delivery" },
   { value: "$0", label: "Upfront Cost" },
+  { value: "100%", label: "Private & Secure" },
+  { value: "Yours", label: "Full Code Ownership" },
 ];
 
 export default function SocialProof() {

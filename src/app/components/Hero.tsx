@@ -15,7 +15,7 @@ export default function Hero() {
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-sm text-muted"
         >
           <span className="inline-block h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-          Accepting new projects
+          Only taking 3 new projects this month
         </motion.div>
 
         <motion.h1
@@ -35,7 +35,8 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted md:text-xl"
         >
-          Get a private AI-powered tool built for your business in{" "}
+          We design and build small internal apps that automate one painful
+          workflow — delivered in{" "}
           <span className="font-medium text-foreground">48 hours</span>.
           No subscriptions. No bloated software.
         </motion.p>

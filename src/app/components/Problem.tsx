@@ -50,8 +50,8 @@ export default function Problem() {
             Your team is wasting hours on tasks a tool could handle.
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted">
-            Every business has that one workflow everyone hates. The tedious,
-            repetitive task that eats up hours every week.
+            You know the task. The one nobody wants to do. It takes hours,
+            it&apos;s the same every time, and it never stops coming.
           </p>
         </motion.div>
 

@@ -7,27 +7,27 @@ const faqs = [
   {
     question: "What kind of tools do you build?",
     answer:
-      "We build small, private internal tools that automate one specific workflow. Think lead qualifiers, document generators, inbox assistants, review responders \u2014 anything that follows a pattern of input \u2192 processing \u2192 output. If you\u2019re doing a repetitive task manually, we can probably automate it.",
+      "Small, private apps that automate one specific workflow for your business. Lead qualifiers, document generators, inbox assistants, review responders \u2014 if it follows a pattern of data in, result out, we can build it. These aren\u2019t generic SaaS tools. Each one is built around your exact process.",
   },
   {
     question: "How does the 48-hour turnaround work?",
     answer:
-      "After our initial call, we get to work immediately. Within 48 hours, you\u2019ll receive a working prototype built around your actual workflow and data. This isn\u2019t a mockup \u2014 it\u2019s a functional tool you can test right away.",
+      "After a quick call where you walk us through your workflow, we start building immediately. Within 48 hours, you get a working tool \u2014 not a mockup or wireframe. It uses your real data and you can test it right away.",
   },
   {
     question: "Do I need technical knowledge?",
     answer:
-      "Not at all. You just need to describe the task you want automated. We handle everything \u2014 design, development, deployment. The tools we build are designed to be as simple as possible to use.",
+      "Zero. You describe the task that\u2019s eating your time, and we handle everything \u2014 design, development, deployment. The tools we build are simple enough that if you can use a spreadsheet, you can use what we deliver.",
   },
   {
     question: "What if I don\u2019t like the prototype?",
     answer:
-      "The prototype is completely free with no commitment. If it doesn\u2019t solve your problem, you walk away with zero cost. We only charge when you\u2019re ready to own or have us manage the tool.",
+      "Then you walk away. Seriously \u2014 the prototype costs you nothing. No invoice, no awkward follow-up, no commitment. We build it for free because we\u2019re confident it\u2019ll speak for itself. You only pay if you want to keep it.",
   },
   {
     question: "Is my data secure?",
     answer:
-      "Absolutely. Each tool is a private application \u2014 your data is never shared with other clients. If you choose ownership, the entire codebase is yours, running on your own infrastructure. For managed plans, we use encrypted, isolated environments.",
+      "Every tool we build is a private, isolated application \u2014 not a shared platform. Your data never touches another client\u2019s system. If you choose ownership, it runs entirely on your infrastructure. For managed plans, we use encrypted, isolated environments that only you can access.",
   },
   {
     question: "Can I request changes after delivery?",

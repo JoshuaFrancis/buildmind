@@ -114,11 +114,11 @@ export default function Examples() {
             What we build
           </p>
           <h2 className="text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl">
-            Tools we&apos;ve built.
+            What your tool could look like.
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted">
-            Every tool follows the same pattern: input your data, AI processes
-            it, get your output.
+            Every tool follows the same pattern: you feed in your data, it gets
+            processed, and you get a clean output — ready to use.
           </p>
         </motion.div>
 

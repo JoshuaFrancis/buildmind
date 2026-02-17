@@ -14,7 +14,7 @@ export default function Footer() {
               </svg>
               <span>BuildMind</span>
             </a>
-            <p className="mt-2 text-sm text-muted">Built with AI. Delivered by humans.</p>
+            <p className="mt-2 text-sm text-muted">Custom tools. Delivered fast.</p>
           </div>
 
           <div className="flex items-center gap-8 text-sm text-muted">
