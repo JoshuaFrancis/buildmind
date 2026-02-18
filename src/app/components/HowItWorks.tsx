@@ -13,7 +13,7 @@ const steps = [
     number: "2",
     title: "We build a working prototype",
     description:
-      "Within 48 hours, you get a functional tool built around your exact workflow. Using your real data. Ready to test.",
+      "Within one week, you get a functional tool built around your exact workflow. Using your real data. Ready to test.",
   },
   {
     number: "3",

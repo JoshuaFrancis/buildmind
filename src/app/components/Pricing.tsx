@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 
-const CALENDLY_URL = "https://calendly.com/your-link";
+const EMAIL = "hello@automationstudio.co";
+const MAILTO = `mailto:${EMAIL}?subject=I%20have%20a%20workflow%20I%20want%20automated`;
 
 const plans = [
   {
@@ -11,7 +12,7 @@ const plans = [
     period: "",
     description: "Working demo using your real data. No commitment.",
     features: [
-      "Functional prototype in 48 hours",
+      "Functional prototype in one week",
       "Built around your actual workflow",
       "Uses your real data",
       "No payment required",
@@ -21,14 +22,14 @@ const plans = [
   },
   {
     name: "Ownership",
-    price: "$600\u2013$1,200",
-    period: "one-time",
+    price: "$600",
+    period: "starting at",
     description: "Get the app code + deployment guide. It\u2019s yours forever.",
     features: [
       "Everything in Prototype",
       "Full source code ownership",
       "Deployment guide included",
-      "30 days of support",
+      "7 days of support",
       "One round of revisions",
     ],
     cta: "Get Started",
@@ -37,7 +38,7 @@ const plans = [
   },
   {
     name: "Managed",
-    price: "$39\u2013$79",
+    price: "$50",
     period: "/month",
     description: "We host, maintain, and update it for you.",
     features: [
@@ -82,7 +83,7 @@ export default function Pricing() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.5, delay: i * 0.1 }}
-              className={`relative rounded-2xl p-8 ${
+              className={`relative flex flex-col rounded-2xl p-8 ${
                 plan.highlighted
                   ? "bg-white shadow-xl ring-2 ring-blue"
                   : "bg-white border border-border/60"
@@ -97,15 +98,18 @@ export default function Pricing() {
               <div className="mb-6">
                 <h3 className="text-lg font-semibold">{plan.name}</h3>
                 <div className="mt-3 flex items-baseline gap-1">
+                  {plan.period === "starting at" && (
+                    <span className="text-sm text-muted">Starting at</span>
+                  )}
                   <span className="text-4xl font-semibold">{plan.price}</span>
-                  {plan.period && (
+                  {plan.period && plan.period !== "starting at" && (
                     <span className="text-sm text-muted">{plan.period}</span>
                   )}
                 </div>
                 <p className="mt-2 text-sm text-muted">{plan.description}</p>
               </div>
 
-              <ul className="mb-8 space-y-3">
+              <ul className="mb-8 flex-1 space-y-3">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm">
                     <svg className="mt-0.5 h-4 w-4 shrink-0 text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -117,10 +121,8 @@ export default function Pricing() {
               </ul>
 
               <a
-                href={CALENDLY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`block w-full rounded-full py-3 text-center text-sm font-semibold transition-all ${
+                href={MAILTO}
+                className={`mt-auto block w-full rounded-full py-3 text-center text-sm font-semibold transition-all ${
                   plan.highlighted
                     ? "bg-blue text-white hover:bg-blue-light"
                     : "bg-card text-foreground hover:bg-card-hover"

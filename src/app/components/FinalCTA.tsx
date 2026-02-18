@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 
-const CALENDLY_URL = "https://calendly.com/your-link";
+const EMAIL = "hello@automationstudio.co";
+const MAILTO = `mailto:${EMAIL}?subject=I%20have%20a%20workflow%20I%20want%20automated`;
 
 export default function FinalCTA() {
   return (
@@ -20,14 +21,12 @@ export default function FinalCTA() {
             {" "}we can eliminate it.
           </h2>
           <p className="mx-auto mt-6 max-w-lg text-lg text-muted">
-            Get a free working prototype in 48 hours. No commitment, no
+            Get a free working prototype in one week. No commitment, no
             contracts. Just results.
           </p>
           <div className="mt-10">
             <a
-              href={CALENDLY_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={MAILTO}
               className="group inline-flex items-center gap-2 rounded-full bg-blue px-10 py-4 text-base font-semibold text-white transition-all hover:bg-blue-light"
             >
               Get Your Free Prototype
@@ -37,7 +36,7 @@ export default function FinalCTA() {
             </a>
           </div>
           <p className="mt-6 text-sm text-muted">
-            Takes 2 minutes &middot; No credit card required
+            Just describe the task &middot; We&apos;ll take it from there
           </p>
         </motion.div>
       </div>

@@ -1,4 +1,5 @@
-const CALENDLY_URL = "https://calendly.com/your-link";
+const EMAIL = "hello@automationstudio.co";
+const MAILTO = `mailto:${EMAIL}`;
 
 export default function Footer() {
   return (
@@ -12,7 +13,7 @@ export default function Footer() {
                 <path d="M8 14L12 10L16 14L20 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M8 18L12 14L16 18L20 14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" />
               </svg>
-              <span>BuildMind</span>
+              <span>Automation Studio</span>
             </a>
             <p className="mt-2 text-sm text-muted">Custom tools. Delivered fast.</p>
           </div>
@@ -21,12 +22,12 @@ export default function Footer() {
             <a href="#how-it-works" className="transition-colors hover:text-foreground">How It Works</a>
             <a href="#examples" className="transition-colors hover:text-foreground">Examples</a>
             <a href="#pricing" className="transition-colors hover:text-foreground">Pricing</a>
-            <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-foreground">Contact</a>
+            <a href={MAILTO} className="transition-colors hover:text-foreground">Contact</a>
           </div>
         </div>
 
         <div className="mt-8 border-t border-border/60 pt-8 text-center text-xs text-muted">
-          &copy; {new Date().getFullYear()} BuildMind. All rights reserved.
+          &copy; {new Date().getFullYear()} Automation Studio. All rights reserved.
         </div>
       </div>
     </footer>

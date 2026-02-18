@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 const stats = [
-  { value: "48hr", label: "Prototype Delivery" },
+  { value: "7 days", label: "Prototype Delivery" },
   { value: "$0", label: "Upfront Cost" },
   { value: "100%", label: "Private & Secure" },
   { value: "Yours", label: "Full Code Ownership" },

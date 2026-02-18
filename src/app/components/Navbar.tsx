@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const CALENDLY_URL = "https://calendly.com/your-link";
+const EMAIL = "hello@automationstudio.co";
+const MAILTO = `mailto:${EMAIL}?subject=I%20have%20a%20workflow%20I%20want%20automated`;
 
 const navLinks = [
   { label: "How It Works", href: "#how-it-works" },
@@ -24,7 +25,7 @@ export default function Navbar() {
             <path d="M8 14L12 10L16 14L20 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M8 18L12 14L16 18L20 14" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" />
           </svg>
-          <span>BuildMind</span>
+          <span>Automation Studio</span>
         </a>
 
         <div className="hidden items-center gap-8 md:flex">
@@ -33,8 +34,8 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="rounded-full bg-blue px-5 py-2 text-sm font-medium text-white transition-all hover:bg-blue-light">
-            Book a Call
+          <a href={MAILTO} className="rounded-full bg-blue px-5 py-2 text-sm font-medium text-white transition-all hover:bg-blue-light">
+            Get in Touch
           </a>
         </div>
 
@@ -54,8 +55,8 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="mt-2 rounded-full bg-blue px-5 py-3 text-center text-sm font-medium text-white">
-                Book a Call
+              <a href={MAILTO} className="mt-2 rounded-full bg-blue px-5 py-3 text-center text-sm font-medium text-white">
+                Get in Touch
               </a>
             </div>
           </motion.div>

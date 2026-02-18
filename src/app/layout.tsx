@@ -8,20 +8,23 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "BuildMind | Custom Internal Tools in 48 Hours",
+  icons: {
+    icon: "/favicon.svg",
+  },
+  title: "Automation Studio | Custom Internal Tools in One Week",
   description:
-    "We design and build small internal apps that automate one painful workflow. No subscriptions, no bloated software. Get a working prototype in 48 hours.",
+    "We design and build small internal apps that automate one painful workflow. No subscriptions, no bloated software. Get a working prototype in one week.",
   keywords: [
     "internal tools",
     "business automation",
     "custom dashboard",
-    "AI tools",
     "workflow automation",
+    "automation studio",
   ],
   openGraph: {
-    title: "BuildMind | Custom Internal Tools in 48 Hours",
+    title: "Automation Studio | Custom Internal Tools in One Week",
     description:
-      "Stop doing repetitive work. Get a private AI-powered tool built for your business in 48 hours.",
+      "Stop doing repetitive work. Get a custom tool built for your business in one week.",
     type: "website",
   },
 };

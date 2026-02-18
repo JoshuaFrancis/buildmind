@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 
-const CALENDLY_URL = "https://calendly.com/your-link";
+const EMAIL = "hello@automationstudio.co";
+const MAILTO = `mailto:${EMAIL}?subject=I%20have%20a%20workflow%20I%20want%20automated`;
 
 export default function Hero() {
   return (
@@ -15,7 +16,7 @@ export default function Hero() {
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-sm text-muted"
         >
           <span className="inline-block h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-          Only taking 3 new projects this month
+          Now accepting new projects
         </motion.div>
 
         <motion.h1
@@ -37,7 +38,7 @@ export default function Hero() {
         >
           We design and build small internal apps that automate one painful
           workflow — delivered in{" "}
-          <span className="font-medium text-foreground">48 hours</span>.
+          <span className="font-medium text-foreground">one week</span>.
           No subscriptions. No bloated software.
         </motion.p>
 
@@ -48,12 +49,10 @@ export default function Hero() {
           className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
         >
           <a
-            href={CALENDLY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={MAILTO}
             className="group inline-flex items-center gap-2 rounded-full bg-blue px-8 py-4 text-base font-medium text-white transition-all hover:bg-blue-light"
           >
-            Show Me What You Can Build
+            Tell Us What to Automate
             <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
@@ -75,7 +74,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-10 text-sm text-muted"
         >
-          Free prototype &middot; No commitment &middot; 48-hour delivery
+          Free prototype &middot; No commitment &middot; One-week delivery
         </motion.p>
       </div>
     </section>

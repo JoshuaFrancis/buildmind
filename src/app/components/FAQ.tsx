@@ -10,9 +10,9 @@ const faqs = [
       "Small, private apps that automate one specific workflow for your business. Lead qualifiers, document generators, inbox assistants, review responders \u2014 if it follows a pattern of data in, result out, we can build it. These aren\u2019t generic SaaS tools. Each one is built around your exact process.",
   },
   {
-    question: "How does the 48-hour turnaround work?",
+    question: "How does the one-week turnaround work?",
     answer:
-      "After a quick call where you walk us through your workflow, we start building immediately. Within 48 hours, you get a working tool \u2014 not a mockup or wireframe. It uses your real data and you can test it right away.",
+      "After a quick call where you walk us through your workflow, we start building immediately. Within one week, you get a working tool \u2014 not a mockup or wireframe. It uses your real data and you can test it right away.",
   },
   {
     question: "Do I need technical knowledge?",
@@ -32,7 +32,7 @@ const faqs = [
   {
     question: "Can I request changes after delivery?",
     answer:
-      "Yes. The Ownership plan includes one round of revisions and 30 days of support. The Managed plan includes ongoing updates and improvements as part of your monthly subscription.",
+      "Yes. The Ownership plan includes one round of revisions and 7 days of support. The Managed plan includes ongoing updates and improvements as part of your monthly subscription.",
   },
 ];
 
