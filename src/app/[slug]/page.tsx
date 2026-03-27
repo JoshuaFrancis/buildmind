@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams } from "next/navigation";
+import { FloatingPaths } from "@/components/ui/background-paths";
 
 const CALENDLY_URL = "https://calendly.com/tryautomation/call";
 
@@ -97,15 +98,15 @@ function FAQItem({
   onToggle: () => void;
 }) {
   return (
-    <div className="border-b border-border/40">
+    <div className="border-b border-white/10">
       <button
         onClick={onToggle}
         className="flex w-full items-center justify-between py-6 text-left transition-colors hover:text-blue"
       >
-        <span className="pr-4 text-lg font-medium">{faq.q}</span>
+        <span className="pr-4 text-lg font-medium text-white">{faq.q}</span>
         <span
-          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border/60 text-muted transition-all ${
-            isOpen ? "rotate-45 bg-foreground text-white border-foreground" : ""
+          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border transition-all ${
+            isOpen ? "rotate-45 bg-white text-dark border-white" : "border-white/20 text-white/50"
           }`}
         >
           <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -122,7 +123,7 @@ function FAQItem({
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <p className="pb-6 text-base leading-relaxed text-muted max-w-xl">{faq.a}</p>
+            <p className="pb-6 text-base leading-relaxed text-dark-muted max-w-xl">{faq.a}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -171,11 +172,10 @@ function AudioPlayer() {
 
   if (hasError) {
     return (
-      <div className="relative overflow-hidden rounded-2xl bg-dark p-8 md:p-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue/10 to-transparent" />
-        <div className="relative flex flex-col items-center gap-4 text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10">
-            <svg className="h-7 w-7 text-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 md:p-10 backdrop-blur-sm">
+        <div className="flex flex-col items-center gap-4 text-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue/20">
+            <svg className="h-7 w-7 text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
             </svg>
           </div>
@@ -187,7 +187,7 @@ function AudioPlayer() {
             href={CALENDLY_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-dark transition-opacity hover:opacity-90"
+            className="mt-2 inline-flex items-center gap-2 rounded-full bg-blue px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-blue-light shadow-lg shadow-blue/25"
           >
             Book a Free Call
             <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -200,8 +200,7 @@ function AudioPlayer() {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-2xl bg-dark p-6 md:p-8">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue/8 to-transparent" />
+    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8 backdrop-blur-sm">
       <audio
         ref={audioRef}
         src="/demo-call.mp3"
@@ -222,7 +221,7 @@ function AudioPlayer() {
           className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-white transition-all ${
             isPlaying
               ? "bg-white/20 ring-4 ring-white/10"
-              : "bg-blue hover:scale-105 hover:shadow-lg hover:shadow-blue/25"
+              : "bg-blue hover:scale-105 shadow-lg shadow-blue/30"
           }`}
           aria-label={isPlaying ? "Pause" : "Play"}
         >
@@ -241,7 +240,7 @@ function AudioPlayer() {
             <div className="h-full rounded-full bg-blue transition-all" style={{ width: `${progress}%` }} />
             {progress > 0 && (
               <div
-                className="absolute top-1/2 -translate-y-1/2 h-3 w-3 rounded-full bg-white shadow-md"
+                className="absolute top-1/2 h-3 w-3 rounded-full bg-white shadow-md"
                 style={{ left: `${progress}%`, transform: `translateX(-50%) translateY(-50%)` }}
               />
             )}
@@ -258,17 +257,13 @@ function AudioPlayer() {
   );
 }
 
-function CTA({ className = "", size = "default", variant = "primary" }: { className?: string; size?: "default" | "large"; variant?: "primary" | "dark" }) {
-  const base = variant === "dark"
-    ? "bg-white text-dark hover:bg-white/90"
-    : "bg-blue text-white hover:bg-blue-light shadow-lg shadow-blue/25 hover:shadow-xl hover:shadow-blue/30 hover:-translate-y-0.5";
-
+function CTA({ className = "", size = "default" }: { className?: string; size?: "default" | "large" }) {
   return (
     <a
       href={CALENDLY_URL}
       target="_blank"
       rel="noopener noreferrer"
-      className={`group inline-flex items-center gap-2 rounded-full font-semibold transition-all ${base} ${
+      className={`group inline-flex items-center gap-2 rounded-full bg-blue font-semibold text-white transition-all hover:bg-blue-light shadow-lg shadow-blue/25 hover:shadow-xl hover:shadow-blue/30 hover:-translate-y-0.5 ${
         size === "large" ? "px-10 py-5 text-lg" : "px-8 py-4 text-base"
       } ${className}`}
     >
@@ -297,10 +292,10 @@ function StickyMobileCTA() {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-50 bg-white/95 px-4 py-3 backdrop-blur-md transition-transform md:hidden ${
+      className={`fixed bottom-0 left-0 right-0 z-50 bg-dark/95 px-4 py-3 backdrop-blur-md transition-transform md:hidden ${
         show ? "translate-y-0" : "translate-y-full"
       }`}
-      style={{ boxShadow: "0 -4px 20px rgba(0,0,0,0.08)" }}
+      style={{ boxShadow: "0 -4px 20px rgba(0,0,0,0.3)" }}
     >
       <a
         href={CALENDLY_URL}
@@ -323,8 +318,8 @@ export default function LandingPage() {
 
   if (!["local", "grow", "start"].includes(slug)) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p className="text-muted">Page not found.</p>
+      <div className="flex min-h-screen items-center justify-center bg-dark">
+        <p className="text-dark-muted">Page not found.</p>
       </div>
     );
   }
@@ -332,107 +327,114 @@ export default function LandingPage() {
   const c = copy[slug];
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-dark text-white">
       <StickyMobileCTA />
 
-      {/* ── Hero ── Dark, full-bleed, composition-first */}
-      <section className="relative overflow-hidden bg-dark">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(0,113,227,0.15),transparent)]" />
-        <div className="relative mx-auto max-w-5xl px-6 pt-24 pb-20 md:pt-36 md:pb-28">
-          <div className="max-w-3xl">
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-              className="mb-6 inline-flex items-center gap-2 rounded-full bg-green-muted px-4 py-1.5 text-xs font-semibold tracking-wide text-green uppercase"
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-green" />
-              Now accepting clients
-            </motion.p>
+      {/* ── Hero ── */}
+      <section className="relative flex items-center overflow-hidden pt-24 pb-24 md:pt-36 md:pb-32">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(0,113,227,0.18),transparent)]" />
+        <div className="absolute inset-0 text-white/[0.07]">
+          <FloatingPaths position={1} />
+          <FloatingPaths position={-1} />
+        </div>
+        <div className="relative mx-auto max-w-4xl px-6 text-center">
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="mb-8 inline-flex items-center gap-2 rounded-full border border-green/30 bg-green/10 px-4 py-1.5 text-xs font-semibold tracking-wide text-green uppercase"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-green animate-pulse" />
+            Now accepting clients
+          </motion.p>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              className="text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-7xl whitespace-pre-line"
-            >
-              {c.headline}
-            </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl md:text-8xl whitespace-pre-line"
+          >
+            {c.headline}
+          </motion.h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="mt-6 max-w-md text-lg leading-relaxed text-dark-muted md:text-xl"
-            >
-              {c.sub}
-            </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="mx-auto mt-8 max-w-lg text-lg leading-relaxed text-dark-muted md:text-xl"
+          >
+            {c.sub}
+          </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
-            >
-              <CTA size="large" variant="dark" />
-              <span className="text-sm text-dark-muted">Free 15-min call. No commitment.</span>
-            </motion.div>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+          >
+            <CTA size="large" />
+            <span className="text-sm text-dark-muted">Free 15-min call. No commitment.</span>
+          </motion.div>
         </div>
       </section>
 
-      {/* ── Hear It ── Dark section, audio is the centerpiece */}
-      <section className="bg-dark py-16 md:py-20">
-        <div className="mx-auto max-w-3xl px-6">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-blue">
-                Listen
-              </p>
-              <h2 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
-                Hear what your customers hear.
-              </h2>
-            </div>
-            <p className="text-sm text-dark-muted">
+      {/* ── Hear It ── */}
+      <section className="relative border-t border-white/10 py-20 md:py-24">
+        <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark-surface to-dark" />
+        <div className="relative mx-auto max-w-3xl px-6">
+          <div className="text-center">
+            <p className="text-xs font-semibold uppercase tracking-widest text-blue">
+              Listen
+            </p>
+            <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl">
+              Hear what your customers hear.
+            </h2>
+            <p className="mt-2 text-sm text-dark-muted">
               Real demo, not scripted.
             </p>
           </div>
 
-          <div className="mt-8">
+          <div className="mt-10">
             <AudioPlayer />
           </div>
         </div>
       </section>
 
-      {/* ── The Problem ── Left-aligned, no center text-align */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-3xl px-6">
-          <p className="text-xs font-semibold uppercase tracking-widest text-red-500">
+      {/* ── The Problem ── */}
+      <section className="relative py-24 md:py-32">
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-surface via-dark to-dark" />
+        <div className="relative mx-auto max-w-3xl px-6 text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-red-400">
             The problem
           </p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl lg:text-5xl">
             Every missed call is a lost&nbsp;job.
           </h2>
 
-          <div className="mt-10 space-y-3">
+          <div className="mt-12 space-y-4 text-left">
             {c.problems.map((text, i) => (
-              <div
+              <motion.div
                 key={i}
-                className="flex items-start gap-4 rounded-xl bg-card p-5 md:p-6"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="flex items-start gap-4 rounded-xl border border-white/8 bg-white/[0.03] p-5 md:p-6 backdrop-blur-sm"
               >
-                <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-red-500/10 text-red-500 text-xs font-bold">
+                <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-red-500/15 text-red-400 text-xs font-bold tabular-nums">
                   {i + 1}
                 </span>
-                <p className="text-base leading-relaxed md:text-lg">{text}</p>
-              </div>
+                <p className="text-base leading-relaxed text-dark-muted md:text-lg">{text}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── How It Works ── Horizontal timeline, not 3-column grid */}
-      <section className="border-y border-border/40 py-20 md:py-28">
-        <div className="mx-auto max-w-3xl px-6">
+      {/* ── How It Works ── */}
+      <section className="relative py-24 md:py-32 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark-surface to-dark" />
+        <div className="relative mx-auto max-w-3xl px-6 text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-blue">
             How it works
           </p>
@@ -440,54 +442,47 @@ export default function LandingPage() {
             Live in days, not&nbsp;months.
           </h2>
 
-          <div className="mt-12 space-y-0">
+          <div className="mt-14 grid gap-6 sm:grid-cols-3">
             {[
-              { step: "01", title: "Quick call", desc: "Tell us about your business, services, and how you want calls handled.", time: "15 min" },
-              { step: "02", title: "We build it", desc: "We train the AI on your business and connect it to your phone number.", time: "5\u20137 days" },
+              { step: "01", title: "Quick call", desc: "Tell us about your business and how you want calls handled.", time: "15 min" },
+              { step: "02", title: "We build it", desc: "We train the AI on your business and connect it to your number.", time: "5\u20137 days" },
               { step: "03", title: "Calls answered", desc: "AI picks up when you can\u2019t. You get a text summary of every call.", time: "24/7" },
-            ].map((s, i) => (
-              <div key={s.step} className="group relative flex gap-6 pb-10 last:pb-0">
-                {/* Vertical line */}
-                {i < 2 && (
-                  <div className="absolute left-[19px] top-10 bottom-0 w-px bg-border/60" />
-                )}
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-foreground text-xs font-bold text-white tabular-nums">
-                  {s.step}
+            ].map((s) => (
+              <div key={s.step} className="group rounded-xl border border-white/8 bg-white/[0.03] p-6 text-left transition-colors hover:bg-white/[0.06] hover:border-white/15">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-dark-muted tabular-nums">{s.step}</span>
+                  <span className="rounded-full bg-blue/15 px-2.5 py-0.5 text-[10px] font-bold text-blue uppercase tracking-wider">{s.time}</span>
                 </div>
-                <div className="pt-1">
-                  <div className="flex items-baseline gap-3">
-                    <h3 className="text-lg font-semibold">{s.title}</h3>
-                    <span className="text-xs font-medium text-blue">{s.time}</span>
-                  </div>
-                  <p className="mt-1 text-sm leading-relaxed text-muted max-w-md">{s.desc}</p>
-                </div>
+                <h3 className="mt-4 text-lg font-bold">{s.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-dark-muted">{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── ROI ── Big comparison cards, left-aligned header */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-3xl px-6">
+      {/* ── ROI ── */}
+      <section className="relative py-24 md:py-32">
+        <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark to-dark-surface" />
+        <div className="relative mx-auto max-w-3xl px-6 text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-blue">
             The math
           </p>
           <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl">
-            $400/mo. One missed call costs&nbsp;more.
+            $400/mo. One missed call<br className="hidden sm:block" /> costs&nbsp;more.
           </h2>
-          <p className="mt-4 max-w-lg text-lg leading-relaxed text-muted">
+          <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-dark-muted">
             {c.roiLine}
           </p>
 
-          {/* Comparison cards, bigger and more dramatic */}
+          {/* Comparison */}
           <div className="mt-12 grid gap-4 sm:grid-cols-2">
-            <div className="rounded-xl bg-card p-6 md:p-8">
-              <p className="text-xs font-semibold uppercase tracking-wider text-muted">Human Receptionist</p>
-              <p className="mt-4 text-4xl font-bold tabular-nums">$2,500+<span className="text-base font-normal text-muted">/mo</span></p>
-              <div className="mt-6 space-y-2.5">
+            <div className="rounded-xl border border-white/8 bg-white/[0.03] p-6 text-left md:p-8">
+              <p className="text-xs font-semibold uppercase tracking-wider text-dark-muted">Human Receptionist</p>
+              <p className="mt-4 text-4xl font-bold tabular-nums">$2,500+<span className="text-base font-normal text-dark-muted">/mo</span></p>
+              <div className="mt-6 space-y-3">
                 {["9-5 only, closed weekends", "Sick days and vacation", "Training and turnover costs"].map((item) => (
-                  <div key={item} className="flex items-center gap-2.5 text-sm text-muted">
+                  <div key={item} className="flex items-center gap-2.5 text-sm text-dark-muted">
                     <svg className="h-4 w-4 shrink-0 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -497,13 +492,13 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <div className="relative rounded-xl bg-foreground p-6 text-white md:p-8">
+            <div className="relative rounded-xl border-2 border-blue/50 bg-blue/10 p-6 text-left md:p-8 shadow-lg shadow-blue/10">
               <div className="absolute -top-3 right-6 rounded-full bg-green px-3 py-1 text-xs font-bold text-dark">
                 Save 84%
               </div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-dark-muted">AI Receptionist</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-blue">AI Receptionist</p>
               <p className="mt-4 text-4xl font-bold tabular-nums">$400<span className="text-base font-normal text-dark-muted">/mo</span></p>
-              <div className="mt-6 space-y-2.5">
+              <div className="mt-6 space-y-3">
                 {["24/7, every day of the year", "Never calls in sick or quits", "Trained on your specific business"].map((item) => (
                   <div key={item} className="flex items-center gap-2.5 text-sm text-dark-muted">
                     <svg className="h-4 w-4 shrink-0 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -516,25 +511,26 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="mt-10">
-            <CTA />
+          <div className="mt-12">
+            <CTA size="large" />
           </div>
         </div>
       </section>
 
       {/* ── Founder ── */}
-      <section className="border-y border-border/40 py-14 md:py-18">
-        <div className="mx-auto max-w-3xl px-6">
-          <div className="flex items-start gap-5">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-foreground text-lg font-bold text-white">
+      <section className="relative border-y border-white/10 py-16 md:py-20">
+        <div className="absolute inset-0 bg-dark-surface" />
+        <div className="relative mx-auto max-w-3xl px-6">
+          <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:text-left">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue to-blue-light text-lg font-bold text-white">
               J
             </div>
             <div>
-              <p className="text-base leading-relaxed text-muted italic">
+              <p className="text-base leading-relaxed text-dark-muted italic">
                 &ldquo;{c.founderQuote}&rdquo;
               </p>
-              <p className="mt-3 text-sm font-semibold">
-                Josh <span className="font-normal text-muted">, Founder</span>
+              <p className="mt-3 text-sm font-semibold text-white">
+                Josh <span className="font-normal text-dark-muted">, Founder</span>
               </p>
             </div>
           </div>
@@ -542,8 +538,9 @@ export default function LandingPage() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="py-20 md:py-28">
-        <div className="mx-auto max-w-3xl px-6">
+      <section className="relative py-24 md:py-32">
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-surface via-dark to-dark" />
+        <div className="relative mx-auto max-w-3xl px-6 text-center">
           <p className="text-xs font-semibold uppercase tracking-widest text-blue">
             FAQ
           </p>
@@ -551,7 +548,7 @@ export default function LandingPage() {
             Questions?
           </h2>
 
-          <div className="mt-10">
+          <div className="mt-10 text-left">
             {faqs.map((faq, i) => (
               <FAQItem
                 key={i}
@@ -564,18 +561,21 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Final CTA ── Dark, full-bleed */}
-      <section className="relative overflow-hidden bg-dark py-24 md:py-32">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_110%,rgba(0,113,227,0.12),transparent)]" />
+      {/* ── Final CTA ── */}
+      <section className="relative overflow-hidden py-28 md:py-36">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_110%,rgba(0,113,227,0.15),transparent)]" />
+        <div className="absolute inset-0 text-white/[0.04]">
+          <FloatingPaths position={1} />
+        </div>
         <div className="relative mx-auto max-w-3xl px-6 text-center">
-          <h2 className="text-3xl font-bold leading-tight tracking-tight text-white md:text-4xl lg:text-5xl">
+          <h2 className="text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl">
             Stop losing jobs<br />to missed&nbsp;calls.
           </h2>
           <p className="mx-auto mt-5 max-w-md text-lg text-dark-muted">
             15-minute call. We&apos;ll show you exactly how it works for your business.
           </p>
           <div className="mt-10">
-            <CTA size="large" variant="dark" />
+            <CTA size="large" />
           </div>
           <p className="mt-6 text-sm text-dark-muted">
             $400/month. Cancel anytime. Live in 5&ndash;7 days.
@@ -584,7 +584,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── Footer ── */}
-      <footer className="bg-dark py-8">
+      <footer className="border-t border-white/10 py-8">
         <div className="mx-auto max-w-6xl px-6 text-center">
           <p className="text-sm text-dark-muted">
             &copy; {new Date().getFullYear()} Automation Studio
