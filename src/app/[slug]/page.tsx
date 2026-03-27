@@ -62,7 +62,7 @@ const copy: Record<string, SlugContent> = {
 const faqs = [
   {
     q: "How does it work?",
-    a: "We set up an AI voice agent on your business phone number. When you can\u2019t answer, it picks up, sounds like a real receptionist, answers questions about your business, and books the job. You get a text with every call summary.",
+    a: "We set up an AI voice agent on your business phone number. When you can\u2019t answer, it picks up, sounds like a real receptionist, answers questions about your business, and books the job.",
   },
   {
     q: "Does it actually sound human?",
@@ -446,7 +446,7 @@ export default function LandingPage() {
             {[
               { step: "01", title: "Quick call", desc: "Tell us about your business and how you want calls handled.", time: "15 min" },
               { step: "02", title: "We build it", desc: "We train the AI on your business and connect it to your number.", time: "5\u20137 days" },
-              { step: "03", title: "Calls answered", desc: "AI picks up when you can\u2019t. You get a text summary of every call.", time: "24/7" },
+              { step: "03", title: "Calls answered", desc: "AI picks up when you can\u2019t. Books jobs, answers questions, takes messages.", time: "24/7" },
             ].map((s) => (
               <div key={s.step} className="group rounded-xl border border-white/8 bg-white/[0.03] p-6 text-left transition-colors hover:bg-white/[0.06] hover:border-white/15">
                 <div className="flex items-center justify-between">
@@ -499,7 +499,7 @@ export default function LandingPage() {
               <p className="text-xs font-semibold uppercase tracking-wider text-blue">With AI backup</p>
               <p className="mt-4 text-2xl font-bold text-green">Every call answered</p>
               <div className="mt-6 space-y-3">
-                {["Covers after-hours, weekends, holidays", "Picks up when you\u2019re busy on a job", "Takes messages and books appointments", "You get a text summary of every call"].map((item) => (
+                {["Covers after-hours, weekends, holidays", "Picks up when you\u2019re busy on a job", "Takes messages and books appointments", "Answers customer questions about your business"].map((item) => (
                   <div key={item} className="flex items-center gap-2.5 text-sm text-dark-muted">
                     <svg className="h-4 w-4 shrink-0 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
