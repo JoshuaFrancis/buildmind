@@ -27,7 +27,7 @@ const copy: Record<string, SlugContent> = {
       "Every missed call is $200\u2013$500 walking out the door. It adds up fast.",
     ],
     roiLine:
-      "The average service call is worth $200\u2013$500. Miss one per month and this has already paid for itself. Most of our clients miss 5\u201310.",
+      "Most businesses miss 5\u201310 calls per month without knowing it. Even at $50 per customer, that\u2019s $250\u2013$500 in lost revenue. The AI pays for itself fast.",
     founderQuote:
       "I watched a plumber lose $3,000 in one week from missed after-hours calls. That\u2019s why I built this.",
   },
@@ -40,7 +40,7 @@ const copy: Record<string, SlugContent> = {
       "You\u2019re turning away work without even knowing it. Every ring you miss is revenue lost.",
     ],
     roiLine:
-      "At $300\u2013$600 per job, missing just two calls a month costs you $600\u2013$1,200. The AI costs less than one missed job.",
+      "You\u2019re already too busy to pick up every call. How many ring out per week? Even a few missed calls a month adds up to way more than $400.",
     founderQuote:
       "Every busy contractor I talked to said the same thing: \u2018I know I\u2019m missing calls, I just can\u2019t get to them.\u2019 Now you don\u2019t have to.",
   },
@@ -53,7 +53,7 @@ const copy: Record<string, SlugContent> = {
       "A receptionist costs $2,500/month. You can\u2019t afford that. But you can\u2019t afford to miss calls either.",
     ],
     roiLine:
-      "Your first customers are the hardest to get. A single missed call could be a $500 job, more than the monthly cost. Don\u2019t let it ring out.",
+      "When you\u2019re just starting out, every single call matters. Missing even a few per month can mean the difference between growing and stalling.",
     founderQuote:
       "I built this for people who are great at their trade but can\u2019t be on the phone and on the job at the same time.",
   },
@@ -81,8 +81,8 @@ const faqs = [
     a: "It transfers to you or takes a detailed message with the caller\u2019s info. You never lose the lead.",
   },
   {
-    q: "How much does a receptionist cost?",
-    a: "A full-time receptionist runs $2,500\u2013$3,500/month. An answering service is $200\u2013$500/month but sounds generic. This is $400/month, available 24/7, and trained on your specific business.",
+    q: "Why not just hire someone to answer phones?",
+    a: "You absolutely can, and this works great alongside a team. But nobody can answer calls at 2am, on weekends, or when everyone\u2019s busy. The AI covers the gaps so no call goes unanswered, ever.",
   },
 ];
 
@@ -469,7 +469,7 @@ export default function LandingPage() {
             The math
           </p>
           <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl">
-            $400/mo. One missed call<br className="hidden sm:block" /> costs&nbsp;more.
+            Missed calls add up.<br className="hidden sm:block" /> $400/mo stops the&nbsp;bleeding.
           </h2>
           <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-dark-muted">
             {c.roiLine}
@@ -478,10 +478,10 @@ export default function LandingPage() {
           {/* Comparison */}
           <div className="mt-12 grid gap-4 sm:grid-cols-2">
             <div className="rounded-xl border border-white/8 bg-white/[0.03] p-6 text-left md:p-8">
-              <p className="text-xs font-semibold uppercase tracking-wider text-dark-muted">Human Receptionist</p>
-              <p className="mt-4 text-4xl font-bold tabular-nums">$2,500+<span className="text-base font-normal text-dark-muted">/mo</span></p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-dark-muted">Without coverage</p>
+              <p className="mt-4 text-2xl font-bold text-red-400">Calls go unanswered</p>
               <div className="mt-6 space-y-3">
-                {["9-5 only, closed weekends", "Sick days and vacation", "Training and turnover costs"].map((item) => (
+                {["After-hours calls go to voicemail", "Missed calls while you\u2019re on the job", "Customers hang up and call your competitor", "No idea how many calls you\u2019re missing"].map((item) => (
                   <div key={item} className="flex items-center gap-2.5 text-sm text-dark-muted">
                     <svg className="h-4 w-4 shrink-0 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -494,12 +494,12 @@ export default function LandingPage() {
 
             <div className="relative rounded-xl border-2 border-blue/50 bg-blue/10 p-6 text-left md:p-8 shadow-lg shadow-blue/10">
               <div className="absolute -top-3 right-6 rounded-full bg-green px-3 py-1 text-xs font-bold text-dark">
-                Save 84%
+                $400/mo
               </div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-blue">AI Receptionist</p>
-              <p className="mt-4 text-4xl font-bold tabular-nums">$400<span className="text-base font-normal text-dark-muted">/mo</span></p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-blue">With AI backup</p>
+              <p className="mt-4 text-2xl font-bold text-green">Every call answered</p>
               <div className="mt-6 space-y-3">
-                {["24/7, every day of the year", "Never calls in sick or quits", "Trained on your specific business"].map((item) => (
+                {["Covers after-hours, weekends, holidays", "Picks up when you\u2019re busy on a job", "Takes messages and books appointments", "You get a text summary of every call"].map((item) => (
                   <div key={item} className="flex items-center gap-2.5 text-sm text-dark-muted">
                     <svg className="h-4 w-4 shrink-0 text-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
