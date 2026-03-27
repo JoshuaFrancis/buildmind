@@ -517,26 +517,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Founder ── */}
-      <section className="relative border-y border-white/10 py-16 md:py-20">
-        <div className="absolute inset-0 bg-dark-surface" />
-        <div className="relative mx-auto max-w-3xl px-6">
-          <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:text-left">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-blue to-blue-light text-lg font-bold text-white">
-              J
-            </div>
-            <div>
-              <p className="text-base leading-relaxed text-dark-muted italic">
-                &ldquo;{c.founderQuote}&rdquo;
-              </p>
-              <p className="mt-3 text-sm font-semibold text-white">
-                Josh <span className="font-normal text-dark-muted">, Founder</span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── FAQ ── */}
       <section className="relative py-24 md:py-32">
         <div className="absolute inset-0 bg-gradient-to-b from-dark-surface via-dark to-dark" />
