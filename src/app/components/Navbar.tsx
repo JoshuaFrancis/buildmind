@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const EMAIL = "hello@automationstudio.co";
+const EMAIL = "hello@tryautomation.studio";
 const MAILTO = `mailto:${EMAIL}?subject=I%20have%20a%20workflow%20I%20want%20automated`;
 
 const navLinks = [

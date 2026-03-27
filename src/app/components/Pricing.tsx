@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const EMAIL = "hello@automationstudio.co";
+const EMAIL = "hello@tryautomation.studio";
 const MAILTO = `mailto:${EMAIL}?subject=I%20have%20a%20workflow%20I%20want%20automated`;
 
 const plans = [
@@ -38,7 +38,7 @@ const plans = [
   },
   {
     name: "Managed",
-    price: "$50",
+    price: "$99",
     period: "/month",
     description: "We host, maintain, and update it for you.",
     features: [

@@ -1,4 +1,4 @@
-const EMAIL = "hello@automationstudio.co";
+const EMAIL = "hello@tryautomation.studio";
 const MAILTO = `mailto:${EMAIL}`;
 
 export default function Footer() {
