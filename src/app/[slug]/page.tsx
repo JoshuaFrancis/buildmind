@@ -64,11 +64,7 @@ const faqs = [
     q: "How does it work?",
     a: "We set up an AI voice agent on your business phone number. When you can\u2019t answer, it picks up, sounds like a real receptionist, answers questions about your business, and books the job.",
   },
-  {
-    q: "Does it actually sound human?",
-    a: "Yes. Press play above and hear it for yourself. Callers don\u2019t know it\u2019s AI.",
-  },
-  {
+{
     q: "What do I need to get started?",
     a: "Just your business phone number and some basic info about your services, hours, and pricing. Setup takes 5\u20137 days. We handle everything.",
   },
@@ -79,10 +75,6 @@ const faqs = [
   {
     q: "What if the AI can\u2019t handle a call?",
     a: "It transfers to you or takes a detailed message with the caller\u2019s info. You never lose the lead.",
-  },
-  {
-    q: "Why not just hire someone to answer phones?",
-    a: "You absolutely can, and this works great alongside a team. But nobody can answer calls at 2am, on weekends, or when everyone\u2019s busy. The AI covers the gaps so no call goes unanswered, ever.",
   },
 ];
 
