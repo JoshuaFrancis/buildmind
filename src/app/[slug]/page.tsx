@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useParams } from "next/navigation";
 import { FloatingPaths } from "@/components/ui/background-paths";
 
-const CALENDLY_URL = "https://calendly.com/tryautomation/call";
+const CALENDLY_URL = "https://calendly.com/automationstudio/15min";
 
 // ── Slug-Specific Copy ──
 
