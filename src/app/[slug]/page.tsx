@@ -44,7 +44,7 @@ const copy: Record<string, SlugContent> = {
       "You\u2019re turning away work without even knowing it. Every ring you miss is revenue lost.",
     ],
     roiLine:
-      "You\u2019re already too busy to pick up every call. How many ring out per week? Even a few missed calls a month adds up to way more than $400.",
+      "You\u2019re already too busy to pick up every call. How many ring out per week? Even a few missed calls a month adds up to way more than $500.",
   },
   start: {
     headline: "Your first hire\nshould be AI.",
@@ -203,15 +203,8 @@ function DemoAudioPlayer({ industry, onFinished }: { industry: string; onFinishe
     return `${m}:${Math.floor(s % 60).toString().padStart(2, "0")}`;
   };
 
-  const label = industries.find((i) => i.id === industry)?.label || "AI Receptionist";
-
   return (
     <div>
-      <div className="mb-3 flex items-center gap-2">
-        <span className="rounded-full bg-blue/15 px-3 py-1 text-xs font-semibold text-blue uppercase tracking-wider">
-          {label} Demo
-        </span>
-      </div>
       <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8 backdrop-blur-sm">
         <audio
           ref={audioRef}
@@ -277,188 +270,56 @@ function DemoAudioPlayer({ industry, onFinished }: { industry: string; onFinishe
   );
 }
 
-// ── Industry Demo Widget (4 states) ──
-
-type DemoState = "select" | "email" | "playing" | "upsell";
+// ── Demo Section ──
 
 function IndustryDemo() {
-  const [state, setState] = useState<DemoState>("select");
-  const [selectedIndustry, setSelectedIndustry] = useState("");
-  const [customIndustry, setCustomIndustry] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
   const [showUpsell, setShowUpsell] = useState(false);
-
-  const handleSelectIndustry = (id: string) => {
-    setSelectedIndustry(id);
-    trackEvent("demo_industry_selected", { industry: id });
-    if (id === "other") {
-      setState("email");
-    } else {
-      setState("email");
-    }
-  };
-
-  const handleSubmitEmail = (e: React.FormEvent) => {
-    e.preventDefault();
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setEmailError("Enter a valid email");
-      return;
-    }
-    setEmailError("");
-    trackEvent("demo_email_submitted", {
-      industry: selectedIndustry,
-      email,
-      ...(customIndustry ? { custom_industry: customIndustry } : {}),
-    });
-    setState("playing");
-  };
-
-  const selectedLabel = industries.find((i) => i.id === selectedIndustry)?.label;
 
   return (
     <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm">
       <div className="p-8 md:p-10">
-        <AnimatePresence mode="wait">
-          {/* STATE 1: SELECT INDUSTRY */}
-          {state === "select" && (
-            <motion.div
-              key="select"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.25 }}
-            >
-              <div className="text-center mb-8">
-                <p className="text-xs font-semibold uppercase tracking-widest text-blue">
-                  Listen
-                </p>
-                <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
-                  Hear what it sounds like for your business
-                </h2>
-                <p className="mt-2 text-sm text-dark-muted">
-                  Pick your industry. We&apos;ll play a real demo call.
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
-                {industries.map((ind) => (
-                  <button
-                    key={ind.id}
-                    onClick={() => handleSelectIndustry(ind.id)}
-                    className="group flex flex-col items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-5 transition-all hover:border-blue/50 hover:bg-blue/10 active:scale-95"
-                  >
-                    <div className="text-dark-muted group-hover:text-blue transition-colors">
-                      {ind.icon}
-                    </div>
-                    <span className="text-sm font-medium text-white">{ind.label}</span>
-                  </button>
-                ))}
-              </div>
-            </motion.div>
-          )}
+        <div className="text-center mb-8">
+          <p className="text-xs font-semibold uppercase tracking-widest text-blue">
+            Listen
+          </p>
+          <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
+            Hear what it sounds like
+          </h2>
+          <p className="mt-2 text-sm text-dark-muted">
+            A real demo call with our AI receptionist.
+          </p>
+        </div>
+        <DemoAudioPlayer
+          industry="general"
+          onFinished={() => setShowUpsell(true)}
+        />
 
-          {/* STATE 2: ENTER EMAIL */}
-          {state === "email" && (
-            <motion.div
-              key="email"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.25 }}
-            >
-              <div className="text-center mb-8">
-                <button
-                  onClick={() => setState("select")}
-                  className="mb-4 text-xs text-dark-muted hover:text-white transition-colors"
-                >
-                  &larr; Back
-                </button>
-                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue/30 bg-blue/10 px-3 py-1 text-xs font-semibold text-blue">
-                  {selectedLabel || "Other"}
-                </div>
-                <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
-                  Drop your email to hear the demo
-                </h2>
-                <p className="mt-2 text-sm text-dark-muted">
-                  No spam. Just a demo call for your industry.
-                </p>
-              </div>
-
-              <form onSubmit={handleSubmitEmail} className="mx-auto max-w-sm space-y-3">
-                {selectedIndustry === "other" && (
-                  <input
-                    type="text"
-                    placeholder="What type of business do you run?"
-                    value={customIndustry}
-                    onChange={(e) => setCustomIndustry(e.target.value)}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white placeholder:text-dark-muted focus:border-blue/50 focus:outline-none focus:ring-1 focus:ring-blue/50"
-                  />
-                )}
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white placeholder:text-dark-muted focus:border-blue/50 focus:outline-none focus:ring-1 focus:ring-blue/50"
-                  required
-                />
-                {emailError && (
-                  <p className="text-xs text-red-400">{emailError}</p>
-                )}
-                <button
-                  type="submit"
-                  className="w-full rounded-xl bg-blue py-3.5 text-sm font-semibold text-white transition-all hover:bg-blue-light shadow-lg shadow-blue/25"
-                >
-                  Play My Demo
-                </button>
-              </form>
-            </motion.div>
-          )}
-
-          {/* STATE 3: PLAYING + STATE 4: UPSELL */}
-          {state === "playing" && (
-            <motion.div
-              key="playing"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.25 }}
-            >
-              <DemoAudioPlayer
-                industry={selectedIndustry}
-                onFinished={() => setShowUpsell(true)}
-              />
-
-              {/* Upsell always visible below player */}
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.5 }}
-                className="mt-8 rounded-xl border border-blue/20 bg-blue/5 p-6 text-center"
-              >
-                <h3 className="text-lg font-bold text-white">
-                  Want to hear this with your business name, your services, your hours?
-                </h3>
-                <p className="mt-2 text-sm text-dark-muted">
-                  We&apos;ll build you a custom demo for free. 15-minute call.
-                </p>
-                <a
-                  href={CALENDLY_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackEvent("demo_cta_clicked", { industry: selectedIndustry })}
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-blue px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-blue-light shadow-lg shadow-blue/25 hover:-translate-y-0.5"
-                >
-                  Book Your Free Demo Call
-                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </a>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Upsell below player */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.5 }}
+          className="mt-8 rounded-xl border border-blue/20 bg-blue/5 p-6 text-center"
+        >
+          <h3 className="text-lg font-bold text-white">
+            Want to hear this with your business name, your services, your hours?
+          </h3>
+          <p className="mt-2 text-sm text-dark-muted">
+            We&apos;ll build you a custom demo for free. 15-minute call.
+          </p>
+          <a
+            href={CALENDLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackEvent("demo_cta_clicked", {})}
+            className="mt-4 inline-flex items-center gap-2 rounded-full bg-blue px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-blue-light shadow-lg shadow-blue/25 hover:-translate-y-0.5"
+          >
+            Book Your Free Demo Call
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </a>
+        </motion.div>
       </div>
     </div>
   );
@@ -552,7 +413,7 @@ export default function LandingPage() {
             className="mb-8 inline-flex items-center gap-2 rounded-full border border-green/30 bg-green/10 px-4 py-1.5 text-xs font-semibold tracking-wide text-green uppercase"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-green animate-pulse" />
-            April intake: accepting 5 businesses
+            Launch partners: 5 spots left for April
           </motion.p>
 
           <motion.h1
@@ -580,8 +441,21 @@ export default function LandingPage() {
             className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
           >
             <CTA size="large" />
-            <span className="text-sm text-dark-muted">Free 15-min call. No commitment.</span>
           </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.45 }}
+            className="mt-6 text-sm text-dark-muted"
+          >
+            <span className="line-through text-dark-muted/60">$1,000 setup</span>{" "}
+            <span className="text-green font-medium">Free for launch partners</span>
+            <span className="mx-2">·</span>
+            Starting at $500/month
+            <span className="mx-2">·</span>
+            Cancel anytime
+          </motion.p>
         </div>
       </section>
 
@@ -662,7 +536,7 @@ export default function LandingPage() {
             The math
           </p>
           <h2 className="mt-3 text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl">
-            Missed calls add up.<br className="hidden sm:block" /> $400/mo stops the&nbsp;bleeding.
+            Missed calls add up.<br className="hidden sm:block" /> $500/mo stops the&nbsp;bleeding.
           </h2>
           <p className="mx-auto mt-5 max-w-lg text-lg leading-relaxed text-dark-muted">
             {c.roiLine}
@@ -690,7 +564,7 @@ export default function LandingPage() {
                 Launch partner pricing
               </div>
               <div className="absolute -top-3 right-6 rounded-full bg-green px-3 py-1 text-xs font-bold text-dark">
-                $400/mo
+                $500/mo
               </div>
               <p className="text-xs font-semibold uppercase tracking-wider text-blue mt-2">With AI backup</p>
               <p className="mt-4 text-2xl font-bold text-green">Every call answered</p>
@@ -748,14 +622,14 @@ export default function LandingPage() {
             Stop losing jobs<br />to missed&nbsp;calls.
           </h2>
           <p className="mx-auto mt-5 max-w-lg text-lg text-dark-muted">
-            We&apos;re taking on 5 Toronto businesses this month as launch partners. We&apos;ll waive the setup fee and include the first week free so we can build case studies. Once we&apos;ve got our 5, pricing goes up.
+            We&apos;re taking on 5 Toronto businesses this month as launch partners. We&apos;ll waive the setup fee so we can build case studies. Once we&apos;ve got our 5, pricing goes up.
           </p>
           <div className="mt-10">
             <CTA size="large" />
           </div>
           <p className="mt-6 text-sm text-dark-muted">
-            <span className="line-through text-dark-muted/60">$500 setup</span>{" "}
-            Free for launch partners. $400/month after trial. Cancel anytime.
+            <span className="line-through text-dark-muted/60">$1,000 setup</span>{" "}
+            Free for launch partners. Starting at $500/month. Cancel anytime.
           </p>
         </div>
       </section>
