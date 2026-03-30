@@ -7,6 +7,13 @@ import { FloatingPaths } from "@/components/ui/background-paths";
 
 const CALENDLY_URL = "https://calendly.com/automationstudio/15min";
 
+// ── Pixel helper ──
+function trackEvent(event: string, data?: Record<string, string>) {
+  if (typeof window !== "undefined" && (window as any).fbq) {
+    (window as any).fbq("trackCustom", event, data);
+  }
+}
+
 // ── Slug-Specific Copy ──
 
 type SlugContent = {
@@ -14,7 +21,6 @@ type SlugContent = {
   sub: string;
   problems: string[];
   roiLine: string;
-  founderQuote: string;
 };
 
 const copy: Record<string, SlugContent> = {
@@ -28,8 +34,6 @@ const copy: Record<string, SlugContent> = {
     ],
     roiLine:
       "Most businesses miss 5\u201310 calls per month without knowing it. Even at $50 per customer, that\u2019s $250\u2013$500 in lost revenue. The AI pays for itself fast.",
-    founderQuote:
-      "I watched a plumber lose $3,000 in one week from missed after-hours calls. That\u2019s why I built this.",
   },
   grow: {
     headline: "You\u2019re too busy\nto answer. AI isn\u2019t.",
@@ -41,8 +45,6 @@ const copy: Record<string, SlugContent> = {
     ],
     roiLine:
       "You\u2019re already too busy to pick up every call. How many ring out per week? Even a few missed calls a month adds up to way more than $400.",
-    founderQuote:
-      "Every busy contractor I talked to said the same thing: \u2018I know I\u2019m missing calls, I just can\u2019t get to them.\u2019 Now you don\u2019t have to.",
   },
   start: {
     headline: "Your first hire\nshould be AI.",
@@ -54,8 +56,6 @@ const copy: Record<string, SlugContent> = {
     ],
     roiLine:
       "When you\u2019re just starting out, every single call matters. Missing even a few per month can mean the difference between growing and stalling.",
-    founderQuote:
-      "I built this for people who are great at their trade but can\u2019t be on the phone and on the job at the same time.",
   },
 };
 
@@ -64,7 +64,7 @@ const faqs = [
     q: "How does it work?",
     a: "We set up an AI voice agent on your business phone number. When you can\u2019t answer, it picks up, sounds like a real receptionist, answers questions about your business, and books the job.",
   },
-{
+  {
     q: "What do I need to get started?",
     a: "Just your business phone number and some basic info about your services, hours, and pricing. Setup takes 5\u20137 days. We handle everything.",
   },
@@ -78,7 +78,57 @@ const faqs = [
   },
 ];
 
-// ── Components ──
+// ── Industry Demo Data ──
+
+const industries = [
+  {
+    id: "barbershop",
+    label: "Barbershop",
+    icon: (
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M7.848 8.25l1.536.887M7.848 8.25a3 3 0 11-5.196-3 3 3 0 015.196 3zm1.536.887a2.165 2.165 0 011.083 1.839c.005.351.054.695.14 1.024M9.384 9.137l2.077 1.199M7.848 15.75l1.536-.887m-1.536.887a3 3 0 11-5.196 3 3 3 0 015.196-3zm1.536-.887a2.165 2.165 0 001.083-1.838c.005-.352.054-.695.14-1.025m-1.223 2.863l2.077-1.199m0-3.328a4.323 4.323 0 012.068-1.379l5.325-1.628a4.5 4.5 0 012.48-.044l.803.215-7.794 4.5m-2.882-1.664A4.331 4.331 0 0010.607 12m3.736 0l7.794 4.5-.802.215a4.5 4.5 0 01-2.48-.043l-5.326-1.629a4.324 4.324 0 01-2.068-1.379M14.343 12l-2.882 1.664" />
+      </svg>
+    ),
+  },
+  {
+    id: "autoshop",
+    label: "Auto Shop",
+    icon: (
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+      </svg>
+    ),
+  },
+  {
+    id: "medspa",
+    label: "Med Spa",
+    icon: (
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+      </svg>
+    ),
+  },
+  {
+    id: "dental",
+    label: "Dental Office",
+    icon: (
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 15.182a4.5 4.5 0 01-6.364 0M21 12a9 9 0 11-18 0 9 9 0 0118 0zM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75zm-.375 0h.008v.015h-.008V9.75zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75zm-.375 0h.008v.015h-.008V9.75z" />
+      </svg>
+    ),
+  },
+  {
+    id: "other",
+    label: "Other",
+    icon: (
+      <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+    ),
+  },
+];
+
+// ── Sub-Components ──
 
 function FAQItem({
   faq,
@@ -123,21 +173,11 @@ function FAQItem({
   );
 }
 
-function AudioPlayer() {
+function DemoAudioPlayer({ industry, onFinished }: { industry: string; onFinished: () => void }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [hasError, setHasError] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    const timer = setTimeout(() => {
-      if (audio.error) setHasError(true);
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -145,7 +185,8 @@ function AudioPlayer() {
     if (isPlaying) {
       audio.pause();
     } else {
-      audio.play().catch(() => setHasError(true));
+      audio.play().catch(() => {});
+      trackEvent("demo_audio_played", { industry });
     }
     setIsPlaying(!isPlaying);
   };
@@ -162,88 +203,262 @@ function AudioPlayer() {
     return `${m}:${Math.floor(s % 60).toString().padStart(2, "0")}`;
   };
 
-  if (hasError) {
-    return (
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-8 md:p-10 backdrop-blur-sm">
-        <div className="flex flex-col items-center gap-4 text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-blue/20">
-            <svg className="h-7 w-7 text-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z" />
-            </svg>
-          </div>
-          <div>
-            <p className="text-base font-medium text-white">Hear the AI in action on your call</p>
-            <p className="mt-1 text-sm text-dark-muted">We&apos;ll play a live demo so you can hear exactly how it sounds</p>
-          </div>
-          <a
-            href={CALENDLY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-2 inline-flex items-center gap-2 rounded-full bg-blue px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-blue-light shadow-lg shadow-blue/25"
-          >
-            Book a Free Call
-            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    );
-  }
+  const label = industries.find((i) => i.id === industry)?.label || "AI Receptionist";
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6 md:p-8 backdrop-blur-sm">
-      <audio
-        ref={audioRef}
-        src="/demo-call.mp3"
-        onTimeUpdate={() => {
-          const a = audioRef.current;
-          if (a?.duration) setProgress((a.currentTime / a.duration) * 100);
-        }}
-        onLoadedMetadata={() => {
-          if (audioRef.current) setDuration(audioRef.current.duration);
-        }}
-        onEnded={() => { setIsPlaying(false); setProgress(0); }}
-        onError={() => setHasError(true)}
-        preload="metadata"
-      />
-      <div className="relative flex items-center gap-5">
-        <button
-          onClick={togglePlay}
-          className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-white transition-all ${
-            isPlaying
-              ? "bg-white/20 ring-4 ring-white/10"
-              : "bg-blue hover:scale-105 shadow-lg shadow-blue/30"
-          }`}
-          aria-label={isPlaying ? "Pause" : "Play"}
-        >
-          {isPlaying ? (
-            <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-            </svg>
-          ) : (
-            <svg className="h-5 w-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M8 5v14l11-7z" />
-            </svg>
-          )}
-        </button>
-        <div className="flex-1">
-          <div className="relative h-1.5 cursor-pointer rounded-full bg-white/15" onClick={handleSeek}>
-            <div className="h-full rounded-full bg-blue transition-all" style={{ width: `${progress}%` }} />
-            {progress > 0 && (
-              <div
-                className="absolute top-1/2 h-3 w-3 rounded-full bg-white shadow-md"
-                style={{ left: `${progress}%`, transform: `translateX(-50%) translateY(-50%)` }}
-              />
+    <div>
+      <div className="mb-3 flex items-center gap-2">
+        <span className="rounded-full bg-blue/15 px-3 py-1 text-xs font-semibold text-blue uppercase tracking-wider">
+          {label} Demo
+        </span>
+      </div>
+      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:p-8 backdrop-blur-sm">
+        <audio
+          ref={audioRef}
+          src="/demo-call.mp3"
+          onTimeUpdate={() => {
+            const a = audioRef.current;
+            if (a?.duration) setProgress((a.currentTime / a.duration) * 100);
+          }}
+          onLoadedMetadata={() => {
+            if (audioRef.current) setDuration(audioRef.current.duration);
+          }}
+          onEnded={() => {
+            setIsPlaying(false);
+            setProgress(0);
+            trackEvent("demo_audio_completed", { industry });
+            onFinished();
+          }}
+          preload="metadata"
+        />
+        <div className="flex items-center gap-5">
+          <button
+            onClick={togglePlay}
+            className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full text-white transition-all ${
+              isPlaying
+                ? "bg-white/20 ring-4 ring-white/10"
+                : "bg-blue hover:scale-105 shadow-lg shadow-blue/30"
+            }`}
+            aria-label={isPlaying ? "Pause" : "Play"}
+          >
+            {isPlaying ? (
+              <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+              </svg>
+            ) : (
+              <svg className="h-5 w-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            )}
+          </button>
+          <div className="flex-1">
+            <div className="relative h-1.5 cursor-pointer rounded-full bg-white/15" onClick={handleSeek}>
+              <div className="h-full rounded-full bg-blue transition-all" style={{ width: `${progress}%` }} />
+              {progress > 0 && (
+                <div
+                  className="absolute top-1/2 h-3 w-3 rounded-full bg-white shadow-md"
+                  style={{ left: `${progress}%`, transform: "translateX(-50%) translateY(-50%)" }}
+                />
+              )}
+            </div>
+            {duration > 0 && (
+              <div className="mt-2 flex justify-between text-xs text-dark-muted font-mono">
+                <span>{fmt((progress / 100) * duration)}</span>
+                <span>{fmt(duration)}</span>
+              </div>
             )}
           </div>
-          {duration > 0 && (
-            <div className="mt-2 flex justify-between text-xs text-dark-muted font-mono">
-              <span>{fmt((progress / 100) * duration)}</span>
-              <span>{fmt(duration)}</span>
-            </div>
-          )}
         </div>
+      </div>
+      <p className="mt-3 text-sm text-dark-muted text-center">
+        This is what your customers hear when they call and you can&apos;t pick up.
+      </p>
+    </div>
+  );
+}
+
+// ── Industry Demo Widget (4 states) ──
+
+type DemoState = "select" | "email" | "playing" | "upsell";
+
+function IndustryDemo() {
+  const [state, setState] = useState<DemoState>("select");
+  const [selectedIndustry, setSelectedIndustry] = useState("");
+  const [customIndustry, setCustomIndustry] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [showUpsell, setShowUpsell] = useState(false);
+
+  const handleSelectIndustry = (id: string) => {
+    setSelectedIndustry(id);
+    trackEvent("demo_industry_selected", { industry: id });
+    if (id === "other") {
+      setState("email");
+    } else {
+      setState("email");
+    }
+  };
+
+  const handleSubmitEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Enter a valid email");
+      return;
+    }
+    setEmailError("");
+    trackEvent("demo_email_submitted", {
+      industry: selectedIndustry,
+      email,
+      ...(customIndustry ? { custom_industry: customIndustry } : {}),
+    });
+    setState("playing");
+  };
+
+  const selectedLabel = industries.find((i) => i.id === selectedIndustry)?.label;
+
+  return (
+    <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm">
+      <div className="p-8 md:p-10">
+        <AnimatePresence mode="wait">
+          {/* STATE 1: SELECT INDUSTRY */}
+          {state === "select" && (
+            <motion.div
+              key="select"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25 }}
+            >
+              <div className="text-center mb-8">
+                <p className="text-xs font-semibold uppercase tracking-widest text-blue">
+                  Listen
+                </p>
+                <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
+                  Hear what it sounds like for your business
+                </h2>
+                <p className="mt-2 text-sm text-dark-muted">
+                  Pick your industry. We&apos;ll play a real demo call.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+                {industries.map((ind) => (
+                  <button
+                    key={ind.id}
+                    onClick={() => handleSelectIndustry(ind.id)}
+                    className="group flex flex-col items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-5 transition-all hover:border-blue/50 hover:bg-blue/10 active:scale-95"
+                  >
+                    <div className="text-dark-muted group-hover:text-blue transition-colors">
+                      {ind.icon}
+                    </div>
+                    <span className="text-sm font-medium text-white">{ind.label}</span>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+
+          {/* STATE 2: ENTER EMAIL */}
+          {state === "email" && (
+            <motion.div
+              key="email"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25 }}
+            >
+              <div className="text-center mb-8">
+                <button
+                  onClick={() => setState("select")}
+                  className="mb-4 text-xs text-dark-muted hover:text-white transition-colors"
+                >
+                  &larr; Back
+                </button>
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue/30 bg-blue/10 px-3 py-1 text-xs font-semibold text-blue">
+                  {selectedLabel || "Other"}
+                </div>
+                <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
+                  Drop your email to hear the demo
+                </h2>
+                <p className="mt-2 text-sm text-dark-muted">
+                  No spam. Just a demo call for your industry.
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmitEmail} className="mx-auto max-w-sm space-y-3">
+                {selectedIndustry === "other" && (
+                  <input
+                    type="text"
+                    placeholder="What type of business do you run?"
+                    value={customIndustry}
+                    onChange={(e) => setCustomIndustry(e.target.value)}
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white placeholder:text-dark-muted focus:border-blue/50 focus:outline-none focus:ring-1 focus:ring-blue/50"
+                  />
+                )}
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3.5 text-sm text-white placeholder:text-dark-muted focus:border-blue/50 focus:outline-none focus:ring-1 focus:ring-blue/50"
+                  required
+                />
+                {emailError && (
+                  <p className="text-xs text-red-400">{emailError}</p>
+                )}
+                <button
+                  type="submit"
+                  className="w-full rounded-xl bg-blue py-3.5 text-sm font-semibold text-white transition-all hover:bg-blue-light shadow-lg shadow-blue/25"
+                >
+                  Play My Demo
+                </button>
+              </form>
+            </motion.div>
+          )}
+
+          {/* STATE 3: PLAYING + STATE 4: UPSELL */}
+          {state === "playing" && (
+            <motion.div
+              key="playing"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.25 }}
+            >
+              <DemoAudioPlayer
+                industry={selectedIndustry}
+                onFinished={() => setShowUpsell(true)}
+              />
+
+              {/* Upsell always visible below player */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.5 }}
+                className="mt-8 rounded-xl border border-blue/20 bg-blue/5 p-6 text-center"
+              >
+                <h3 className="text-lg font-bold text-white">
+                  Want to hear this with your business name, your services, your hours?
+                </h3>
+                <p className="mt-2 text-sm text-dark-muted">
+                  We&apos;ll build you a custom demo for free. 15-minute call.
+                </p>
+                <a
+                  href={CALENDLY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent("demo_cta_clicked", { industry: selectedIndustry })}
+                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-blue px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-blue-light shadow-lg shadow-blue/25 hover:-translate-y-0.5"
+                >
+                  Book Your Free Demo Call
+                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </a>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -337,7 +552,7 @@ export default function LandingPage() {
             className="mb-8 inline-flex items-center gap-2 rounded-full border border-green/30 bg-green/10 px-4 py-1.5 text-xs font-semibold tracking-wide text-green uppercase"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-green animate-pulse" />
-            Now accepting clients
+            April intake: accepting 5 businesses
           </motion.p>
 
           <motion.h1
@@ -370,25 +585,11 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── Hear It ── */}
+      {/* ── Industry Demo ── */}
       <section className="relative border-t border-white/10 py-20 md:py-24">
         <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark-surface to-dark" />
         <div className="relative mx-auto max-w-3xl px-6">
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest text-blue">
-              Listen
-            </p>
-            <h2 className="mt-3 text-2xl font-bold tracking-tight md:text-3xl lg:text-4xl">
-              Hear what your customers hear.
-            </h2>
-            <p className="mt-2 text-sm text-dark-muted">
-              Real demo, not scripted.
-            </p>
-          </div>
-
-          <div className="mt-10">
-            <AudioPlayer />
-          </div>
+          <IndustryDemo />
         </div>
       </section>
 
@@ -485,10 +686,13 @@ export default function LandingPage() {
             </div>
 
             <div className="relative rounded-xl border-2 border-blue/50 bg-blue/10 p-6 text-left md:p-8 shadow-lg shadow-blue/10">
+              <div className="absolute -top-3 left-6 rounded-full bg-blue/20 border border-blue/40 px-3 py-1 text-xs font-bold text-blue">
+                Launch partner pricing
+              </div>
               <div className="absolute -top-3 right-6 rounded-full bg-green px-3 py-1 text-xs font-bold text-dark">
                 $400/mo
               </div>
-              <p className="text-xs font-semibold uppercase tracking-wider text-blue">With AI backup</p>
+              <p className="text-xs font-semibold uppercase tracking-wider text-blue mt-2">With AI backup</p>
               <p className="mt-4 text-2xl font-bold text-green">Every call answered</p>
               <div className="mt-6 space-y-3">
                 {["Covers after-hours, weekends, holidays", "Picks up when you\u2019re busy on a job", "Takes messages and books appointments", "Answers customer questions about your business"].map((item) => (
@@ -543,14 +747,15 @@ export default function LandingPage() {
           <h2 className="text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl">
             Stop losing jobs<br />to missed&nbsp;calls.
           </h2>
-          <p className="mx-auto mt-5 max-w-md text-lg text-dark-muted">
-            15-minute call. We&apos;ll show you exactly how it works for your business.
+          <p className="mx-auto mt-5 max-w-lg text-lg text-dark-muted">
+            We&apos;re taking on 5 Toronto businesses this month as launch partners. We&apos;ll waive the setup fee and include the first week free so we can build case studies. Once we&apos;ve got our 5, pricing goes up.
           </p>
           <div className="mt-10">
             <CTA size="large" />
           </div>
           <p className="mt-6 text-sm text-dark-muted">
-            $400/month. Cancel anytime. Live in 5&ndash;7 days.
+            <span className="line-through text-dark-muted/60">$500 setup</span>{" "}
+            Free for launch partners. $400/month after trial. Cancel anytime.
           </p>
         </div>
       </section>
