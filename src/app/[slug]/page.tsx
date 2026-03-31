@@ -11,6 +11,9 @@ const CALENDLY_URL = "https://calendly.com/automationstudio/15min";
 function trackEvent(event: string, data?: Record<string, string>) {
   if (typeof window !== "undefined" && (window as any).fbq) {
     (window as any).fbq("trackCustom", event, data);
+    if (event === "cta_book_call" || event === "demo_cta_clicked") {
+      (window as any).fbq("track", "Schedule");
+    }
   }
 }
 
@@ -331,6 +334,7 @@ function CTA({ className = "", size = "default" }: { className?: string; size?: 
       href={CALENDLY_URL}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackEvent("cta_book_call", { size })}
       className={`group inline-flex items-center gap-2 rounded-full bg-blue font-semibold text-white transition-all hover:bg-blue-light shadow-lg shadow-blue/25 hover:shadow-xl hover:shadow-blue/30 hover:-translate-y-0.5 ${
         size === "large" ? "px-10 py-5 text-lg" : "px-8 py-4 text-base"
       } ${className}`}
@@ -369,6 +373,7 @@ function StickyMobileCTA() {
         href={CALENDLY_URL}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={() => trackEvent("cta_book_call", { size: "mobile_sticky" })}
         className="block w-full rounded-full bg-blue py-3.5 text-center text-sm font-semibold text-white shadow-lg shadow-blue/25"
       >
         Book a Free Call
